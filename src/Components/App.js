@@ -1,7 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 import '../assets/css/App.css';
+import AddTodo from "./AddTodo";
 function App() {
+    const [todoList , setTodoList] = useState([])
+    let addTodo = item => {
+        setTodoList([
+            ...todoList,
+            {id : Date.now() , done : false , text : item}
+        ])
+    }
    return(
        <>
            <header>
@@ -16,17 +24,7 @@ function App() {
                    <div className="container d-flex justify-content-center ">
                        <div className="d-flex flex-column align-items-center">
                            <h1 className="fs-3">افزودن کار :</h1>
-                           <form action="">
-                                <div className="row m-3">
-                                    <div className="col-9">
-                                        <input type="text" className="form-control "/>
-                                    </div>
-                                    <div className="col-3">
-                                        <button className="btn btn-success ">افزودن</button>
-                                    </div>
-
-                                </div>
-                           </form>
+                           <AddTodo add={addTodo}/>
                        </div>
                    </div>
                </div>
