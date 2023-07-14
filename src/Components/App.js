@@ -2,19 +2,24 @@ import React, {useState} from "react";
 import 'bootstrap/dist/css/bootstrap.rtl.min.css';
 import '../assets/css/App.css';
 import AddTodo from "./AddTodo";
+import TodoItem from "./TodoItem";
 function App() {
-    const [todoList , setTodoList] = useState([])
+    const [todoList , setTodoList] = useState([
+        {id:1 , done : true , text: 'کار و زندگی'}
+    ])
+    const [statusDone , setStatusDone] = useState(false)
     let addTodo = item => {
         setTodoList([
             ...todoList,
             {id : Date.now() , done : false , text : item}
         ])
     }
+    let filterTodos = todoList.filter(item => item.done === statusDone)
    return(
        <>
            <header>
                <nav className="navbar bg-dark">
-                   <div className="container-fluid">
+                   <div className="container">
                        <a className="navbar-brand link-light" href="http://localhost:3000">کار هایی که باید انجام بدی :/</a>
                    </div>
                </nav>
@@ -32,30 +37,27 @@ function App() {
                    <div className="d-flex flex-column align-items-center">
                        <ul className="nav nav-tabs col-md-6 col-8">
                            <li className="nav-item">
-                               <a className="nav-link active" aria-current="page" href="#">
+                               <a onClick={() => setStatusDone(false)} className={`nav-link ${!statusDone ? 'active' : 'link-secondary'}`} href="#" aria-current="page" >
                                    <span>کار ها</span>
-                                   <span className="badge bg-danger mx-1">10</span>
+                                   <span className="badge bg-danger mx-1">{todoList.filter(item => !item.done ).length}</span>
                                </a>
                            </li>
                            <li className="nav-item">
-                               <a className="nav-link link-secondary" href="#">
+                               <a onClick={() => setStatusDone(true)} className={`nav-link ${statusDone ? 'active' : 'link-secondary'}`} href="#">
                                    <span>انجام شده</span>
-                                   <span className="badge bg-success mx-1">10</span>
+                                   <span className="badge bg-success mx-1">{todoList.filter(item => item.done ).length}</span>
                                </a>
                            </li>
 
                        </ul>
                    </div>
-                   <div className="d-flex flex-column align-items-center">
-                       <div className="col-md-6 col-8 border border-1 mt-2 p-3 rounded d-flex align-items-center justify-content-between">
-                            <div>
-                                <span>فکر کردن اضافی</span>
-                            </div>
-                           <div className="d-flex">
-                               <button className="btn btn-warning mx-1">حذف</button>
-                               <button className="btn btn-primary ">ویرایش</button>
-                           </div>
-                       </div>
+                   <div className="d-flex flex-column align-items-center mt-4">
+
+                       {
+                           filterTodos.length === 0 ? <p>کاری وجود ندارد</p> :
+                           filterTodos.map(item => <TodoItem key={item.id} text={item.text} />)
+                       }
+
                    </div>
                </div>
            </main>
