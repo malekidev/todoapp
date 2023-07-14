@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'bakh';
+    src: url("../fonts/YekanBakh_FaNum_Medium.woff");
+    font-weight: normal;
+}
+
+*{
+    font-family: bakh,sans-serif;
+    direction: rtl;
+}
