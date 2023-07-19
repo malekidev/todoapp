@@ -14,6 +14,12 @@ function App() {
             {id : Date.now() , done : false , text : item}
         ])
     }
+    let deleteTodo = key => {
+        setTodoList(
+            todoList.filter(item => item.id !== key)
+        )
+    }
+
     let filterTodos = todoList.filter(item => item.done === statusDone)
    return(
        <>
@@ -55,7 +61,7 @@ function App() {
 
                        {
                            filterTodos.length === 0 ? <p>کاری وجود ندارد</p> :
-                           filterTodos.map(item => <TodoItem key={item.id} text={item.text} />)
+                           filterTodos.map(item => <TodoItem key={item.id} item={item} delete={deleteTodo} />)
                        }
 
                    </div>
