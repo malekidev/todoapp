@@ -19,10 +19,19 @@ function App() {
             todoList.filter(item => item.id !== key)
         )
     }
+
     let doneTodo = key => {
         let find = todoList.find(item => item.id === key)
         setTodoList([
                 {id : key , done: ! find.done , text: find.text},
+                ...todoList.filter(item => item.id !== key),
+            ]
+        )
+    }
+    let editTodo = (key , edit) => {
+        let find = todoList.find(item => item.id === key)
+        setTodoList([
+                {id : key , done: find.done , text: edit},
                 ...todoList.filter(item => item.id !== key),
             ]
         )
@@ -68,7 +77,7 @@ function App() {
 
                        {
                            filterTodos.length === 0 ? <p>کاری وجود ندارد</p> :
-                           filterTodos.map(item => <TodoItem key={item.id} item={item} delete={deleteTodo} done={doneTodo}/>)
+                           filterTodos.map(item => <TodoItem key={item.id} item={item} delete={deleteTodo} done={doneTodo} edit={editTodo}/>)
                        }
 
                    </div>
